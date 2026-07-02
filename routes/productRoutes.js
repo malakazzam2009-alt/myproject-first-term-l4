@@ -10,13 +10,16 @@ const {
 
 const router = express.Router();
 
-router.route("/")
+router
+  .route("/")
   .get(getProducts)
   .post(createProduct);
 
-router.route("/:id")
+router
+  .route("/:id")
   .get(getProduct)
   .put(updateProduct)
+  .patch(updateProduct)
   .delete(deleteProduct);
 
 module.exports = router;

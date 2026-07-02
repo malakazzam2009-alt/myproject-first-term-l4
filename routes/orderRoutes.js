@@ -9,12 +9,15 @@ const {
 
 const router = express.Router();
 
-router.post("/", checkout);
+router
+  .route("/")
+  .post(checkout)
+  .get(getOrders);
 
-router.get("/", getOrders);
-
-router.get("/:id", getOrder);
-
-router.put("/:id", updateOrderStatus);
+router
+  .route("/:id")
+  .get(getOrder)
+  .put(updateOrderStatus)
+  .patch(updateOrderStatus);
 
 module.exports = router;
