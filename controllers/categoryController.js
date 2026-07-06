@@ -1,34 +1,46 @@
 const Category = require("../models/Category");
-const asyncHandler = require("../config/asyncHandler");
-const AppError = require("../config/appError");
+const asyncHandler = require("../utils/asyncHandler");
+const AppError = require("../utils/AppError");
 
-
-const getCategories = asyncHandler(async (req, res) => {
+// Get All Categories
+exports.getCategories = asyncHandler(async (req, res, next) => {
   const categories = await Category.find();
 
-  res.status(200).json(categories);
+  res.status(200).json({
+    status: "success",
+    message: "Categories retrieved successfully",
+    data: categories,
+  });
 });
 
-
-const getCategory = asyncHandler(async (req, res) => {
+// Get Category By ID
+exports.getCategory = asyncHandler(async (req, res, next) => {
   const category = await Category.findById(req.params.id);
 
   if (!category) {
-    throw new AppError("Category not found", 404);
+    return next(new AppError("Category not found", 404));
   }
 
-  res.status(200).json(category);
-});
-
-const createCategory = asyncHandler(async (req, res) => {
-  const category = await Category.create({
-    name: req.body.name,
+  res.status(200).json({
+    status: "success",
+    message: "Category retrieved successfully",
+    data: category,
   });
-
-  res.status(201).json(category);
 });
 
-const updateCategory = asyncHandler(async (req, res) => {
+// Create Category
+exports.createCategory = asyncHandler(async (req, res, next) => {
+  const category = await Category.create(req.body);
+
+  res.status(201).json({
+    status: "success",
+    message: "Category created successfully",
+    data: category,
+  });
+});
+
+// Update Category
+exports.updateCategory = asyncHandler(async (req, res, next) => {
   const category = await Category.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -39,29 +51,27 @@ const updateCategory = asyncHandler(async (req, res) => {
   );
 
   if (!category) {
-    throw new AppError("Category not found", 404);
-  }
-
-  res.status(200).json(category);
-});
-
-const deleteCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findByIdAndDelete(req.params.id);
-
-  if (!category) {
-    throw new AppError("Category not found", 404);
+    return next(new AppError("Category not found", 404));
   }
 
   res.status(200).json({
-    success: true,
-    message: "Category deleted successfully",
+    status: "success",
+    message: "Category updated successfully",
+    data: category,
   });
 });
 
-module.exports = {
-  getCategories,
-  getCategory,
-  createCategory,
-  updateCategory,
-  deleteCategory,
-};
+// Delete Category
+exports.deleteCategory = asyncHandler(async (req, res, next) => {
+  const category = await Category.findByIdAndDelete(req.params.id);
+
+  if (!category) {
+    return next(new AppError("Category not found", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: "Category deleted successfully",
+    data: null,
+  });
+});

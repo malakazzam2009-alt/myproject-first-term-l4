@@ -10,11 +10,13 @@ const {
 
 const router = express.Router();
 
+// Get All Products & Create Product
 router
   .route("/")
   .get(getProducts)
   .post(createProduct);
 
+// Get, Update & Delete Product
 router
   .route("/:id")
   .get(getProduct)

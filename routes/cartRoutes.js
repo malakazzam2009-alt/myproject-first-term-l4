@@ -2,7 +2,7 @@ const express = require("express");
 
 const {
   getCart,
-  addItem,
+  addItemToCart,
   updateCartItem,
   removeCartItem,
   clearCart,
@@ -10,15 +10,20 @@ const {
 
 const router = express.Router();
 
+// Get Cart
 router.get("/", getCart);
 
-router.post("/", addItem);
+// Add Item
+router.post("/items", addItemToCart);
 
-router.put("/", updateCartItem);
-router.patch("/", updateCartItem);
+// Update Item Quantity
+router
+  .route("/items/:productId")
+  .put(updateCartItem)
+  .patch(updateCartItem)
+  .delete(removeCartItem);
 
-router.delete("/:productId", removeCartItem);
-
+// Clear Cart
 router.delete("/", clearCart);
 
 module.exports = router;

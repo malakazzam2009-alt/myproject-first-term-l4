@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
   {
+    orderNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
     items: [
       {
         product: {
@@ -9,6 +15,17 @@ const orderSchema = new mongoose.Schema(
           ref: "Product",
           required: [true, "Product is required"],
         },
+
+        name: {
+          type: String,
+          required: true,
+        },
+
+        price: {
+          type: Number,
+          required: true,
+        },
+
         quantity: {
           type: Number,
           required: [true, "Quantity is required"],
@@ -16,18 +33,31 @@ const orderSchema = new mongoose.Schema(
         },
       },
     ],
+
     totalPrice: {
       type: Number,
       required: [true, "Total price is required"],
       min: [0, "Total price cannot be negative"],
     },
+
     status: {
       type: String,
       enum: {
-        values: ["Pending", "Processing", "Shipped", "Delivered"],
-        message: "Status must be Pending, Processing, Shipped or Delivered",
+        values: [
+          "Pending",
+          "Processing",
+          "Shipped",
+          "Delivered",
+          "Cancelled",
+        ],
+        message: "Invalid order status",
       },
       default: "Pending",
+    },
+
+    shippingAddress: {
+      type: String,
+      required: [true, "Shipping address is required"],
     },
   },
   {

@@ -10,11 +10,13 @@ const {
 
 const router = express.Router();
 
+// Get All Categories & Create Category
 router
   .route("/")
   .get(getCategories)
   .post(createCategory);
 
+// Get, Update & Delete Category
 router
   .route("/:id")
   .get(getCategory)

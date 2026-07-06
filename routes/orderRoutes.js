@@ -1,7 +1,7 @@
 const express = require("express");
 
 const {
-  checkout,
+  createOrder,
   getOrders,
   getOrder,
   updateOrderStatus,
@@ -9,14 +9,18 @@ const {
 
 const router = express.Router();
 
+// Create Order & Get All Orders
 router
   .route("/")
-  .post(checkout)
-  .get(getOrders);
+  .get(getOrders)
+  .post(createOrder);
 
+// Get Order By ID
+router.get("/:id", getOrder);
+
+// Update Order Status
 router
-  .route("/:id")
-  .get(getOrder)
+  .route("/:id/status")
   .put(updateOrderStatus)
   .patch(updateOrderStatus);
 

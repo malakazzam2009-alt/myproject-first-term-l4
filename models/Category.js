@@ -1,19 +1,34 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const categorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: [true, "Category name is required"],
-      unique: true,
       trim: true,
-      minlength: [3, "Category name must be at least 3 characters"],
-      maxlength: [50, "Category name must not exceed 50 characters"],
+      unique: true,
+    },
+    description: {
+      type: String,
+      required: [true, "Category description is required"],
+      trim: true,
+    },
+    slug: {
+      type: String,
     },
   },
   {
     timestamps: true,
   }
 );
+
+categorySchema.pre("save", function (next) {
+  this.slug = slugify(this.name, {
+    lower: true,
+    strict: true,
+  });
+  next();
+});
 
 module.exports = mongoose.model("Category", categorySchema);

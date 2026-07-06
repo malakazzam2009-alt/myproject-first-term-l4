@@ -1,7 +1,7 @@
 {
   "name": "my-project-first-term-l4",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is my Level 4 Web Development project.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -13,13 +13,25 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-mongo-sanitize": "^2.2.0",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.7.3",
-    "morgan": "^1.11.0"
+    "morgan": "^1.11.0",
+    "slugify": "^1.6.9"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malakazzam2009-alt/myproject-first-term-l4.git"
+  },
+  "bugs": {
+    "url": "https://github.com/malakazzam2009-alt/myproject-first-term-l4/issues"
+  },
+  "homepage": "https://github.com/malakazzam2009-alt/myproject-first-term-l4#readme"
 }
