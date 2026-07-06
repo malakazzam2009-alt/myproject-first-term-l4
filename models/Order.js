@@ -4,7 +4,7 @@ const orderSchema = new mongoose.Schema(
   {
     orderNumber: {
       type: String,
-      required: true,
+      required: [true, "Order number is required"],
       unique: true,
     },
 
@@ -18,12 +18,14 @@ const orderSchema = new mongoose.Schema(
 
         name: {
           type: String,
-          required: true,
+          required: [true, "Product name is required"],
+          trim: true,
         },
 
         price: {
           type: Number,
-          required: true,
+          required: [true, "Product price is required"],
+          min: [0, "Price cannot be negative"],
         },
 
         quantity: {
@@ -58,6 +60,7 @@ const orderSchema = new mongoose.Schema(
     shippingAddress: {
       type: String,
       required: [true, "Shipping address is required"],
+      trim: true,
     },
   },
   {

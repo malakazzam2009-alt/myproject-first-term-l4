@@ -1,5 +1,7 @@
-const express = require("express");
 const dotenv = require("dotenv");
+dotenv.config();
+
+const express = require("express");
 const cors = require("cors");
 const mongoSanitize = require("express-mongo-sanitize");
 
@@ -12,14 +14,12 @@ const orderRoutes = require("./routes/orderRoutes");
 
 const errorHandler = require("./middlewares/errorMiddleware");
 
-dotenv.config();
-
 const app = express();
 
 // Middlewares
-app.use(cors());
 app.use(express.json());
 app.use(mongoSanitize());
+app.use(cors());
 
 // Home Route
 app.get("/", (req, res) => {
@@ -39,6 +39,7 @@ app.use("/api/orders", orderRoutes);
 app.use((req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl}`, 404));
 });
+
 // Global Error Handler
 app.use(errorHandler);
 

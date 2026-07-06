@@ -66,7 +66,10 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 
 // Get All Orders
 exports.getOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find();
+  const orders = await Order.find().populate(
+    "items.product",
+    "name price"
+  );
 
   res.status(200).json({
     status: "success",
@@ -77,7 +80,10 @@ exports.getOrders = asyncHandler(async (req, res) => {
 
 // Get Order By ID
 exports.getOrder = asyncHandler(async (req, res, next) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(req.params.id).populate(
+    "items.product",
+    "name price"
+  );
 
   if (!order) {
     return next(new AppError("Order not found", 404));
@@ -122,4 +128,4 @@ exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
     message: "Order status updated successfully",
     data: order,
   });
-});
+})

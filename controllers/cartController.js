@@ -49,6 +49,10 @@ exports.addItemToCart = asyncHandler(async (req, res, next) => {
   );
 
   if (item) {
+    if (item.quantity + quantity > product.stock) {
+      return next(new AppError("Not enough stock", 400));
+    }
+
     item.quantity += quantity;
   } else {
     cart.items.push({
@@ -92,6 +96,16 @@ exports.updateCartItem = asyncHandler(async (req, res, next) => {
 
   if (!item) {
     return next(new AppError("Product not found in cart", 404));
+  }
+
+  const product = await Product.findById(req.params.productId);
+
+  if (!product) {
+    return next(new AppError("Product not found", 404));
+  }
+
+  if (quantity > product.stock) {
+    return next(new AppError("Not enough stock", 400));
   }
 
   item.quantity = quantity;

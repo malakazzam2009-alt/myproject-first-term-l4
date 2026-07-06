@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 
 const Category = require("./models/Category");
 const Product = require("./models/Product");
+const Cart = require("./models/Cart");
 const Order = require("./models/Order");
 
 const categories = [
@@ -29,6 +30,7 @@ const seedData = async () => {
 
     // Delete old data
     await Order.deleteMany();
+    await Cart.deleteMany();
     await Product.deleteMany();
     await Category.deleteMany();
 
@@ -36,6 +38,8 @@ const seedData = async () => {
 
     // Insert Categories
     const createdCategories = await Category.insertMany(categories);
+
+    console.log("Categories added.");
 
     // Insert Products
     const products = [
@@ -97,11 +101,13 @@ const seedData = async () => {
 
     const createdProducts = await Product.insertMany(products);
 
-    console.log(
-      `Seed completed successfully.
+    console.log("Products added.");
+
+    console.log(`
+Seed completed successfully.
 Categories: ${createdCategories.length}
-Products: ${createdProducts.length}`
-    );
+Products: ${createdProducts.length}
+`);
   } catch (error) {
     console.error("Seed failed.");
     console.error(error.message);

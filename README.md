@@ -1,68 +1,66 @@
-# My project frist term L4
+# E-Commerce Backend API
 
-## Project Description
+## About the Project
 
-This project is an E-Commerce Backend API built using Node.js, Express.js, and MongoDB. It provides RESTful APIs for managing categories, products, carts, and orders.
+This is my first term backend project for Level 4.
+I built a simple E-Commerce REST API using Node.js, Express.js, and MongoDB.
+The project allows users to manage categories, products, carts, and orders.
 
-## Technologies Used
+## Technologies
 
 - Node.js
 - Express.js
 - MongoDB
 - Mongoose
 - dotenv
-- express-mongo-sanitize
-- bcryptjs
-- jsonwebtoken
-- slugify
 - cors
+- slugify
+- express-mongo-sanitize
 - nodemon
 
 ## Installation
 
-1. Clone the repository:
+Clone the project:
 
 ```bash
 git clone <repository-url>
 ```
 
-2. Install dependencies:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-3. Create a `.env` file and add:
+Create a `.env` file and add:
 
 ```env
 PORT=3000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-JWT_EXPIRES_IN=7d
 NODE_ENV=development
 ```
 
 ## Run the Project
 
-Development mode:
+For development:
 
 ```bash
 npm run dev
 ```
 
-Production mode:
+For production:
 
 ```bash
 npm start
 ```
 
-## Seed Database
+## Seed the Database
 
 ```bash
 npm run seed
 ```
 
-## API Endpoints
+## API Routes
 
 ### Categories
 
@@ -116,5 +114,7 @@ README.md
 ```
 
 ## Author
-Malak waleed saad azzam
-Level 4 Web Development Project
+
+**Malak Waleed Saad Azzam**
+
+Level 4 – First Term Web Development Project
