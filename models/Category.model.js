@@ -11,7 +11,6 @@ const categorySchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: [true, "Category description is required"],
       trim: true,
     },
     slug: {

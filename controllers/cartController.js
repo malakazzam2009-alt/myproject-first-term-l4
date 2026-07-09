@@ -1,17 +1,25 @@
-const Cart = require("../models/Cart");
-const Product = require("../models/Product");
+const Cart = require("../models/Cart.model");
+const Product = require("../models/Product.model");
+
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
 // Get Cart
-exports.getCart = asyncHandler(async (req, res, next) => {
+exports.getCart = asyncHandler(async (req, res) => {
   const cart = await Cart.findOne().populate(
     "items.product",
     "name price images"
   );
 
   if (!cart) {
-    return next(new AppError("Cart not found", 404));
+    return res.status(200).json({
+      status: "success",
+      message: "Cart is empty",
+      data: {
+        items: [],
+        totalPrice: 0,
+      },
+    });
   }
 
   res.status(200).json({
@@ -80,10 +88,6 @@ exports.addItemToCart = asyncHandler(async (req, res, next) => {
 exports.updateCartItem = asyncHandler(async (req, res, next) => {
   const { quantity } = req.body;
 
-  if (quantity < 1) {
-    return next(new AppError("Quantity must be at least 1", 400));
-  }
-
   const cart = await Cart.findOne();
 
   if (!cart) {
@@ -96,6 +100,25 @@ exports.updateCartItem = asyncHandler(async (req, res, next) => {
 
   if (!item) {
     return next(new AppError("Product not found in cart", 404));
+  }
+
+  if (quantity <= 0) {
+    cart.items = cart.items.filter(
+      (item) => item.product.toString() !== req.params.productId
+    );
+
+    cart.totalPrice = cart.items.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+
+    await cart.save();
+
+    return res.status(200).json({
+      status: "success",
+      message: "Item removed successfully",
+      data: cart,
+    });
   }
 
   const product = await Product.findById(req.params.productId);
@@ -155,7 +178,14 @@ exports.clearCart = asyncHandler(async (req, res, next) => {
   const cart = await Cart.findOne();
 
   if (!cart) {
-    return next(new AppError("Cart not found", 404));
+    return res.status(200).json({
+      status: "success",
+      message: "Cart is already empty",
+      data: {
+        items: [],
+        totalPrice: 0,
+      },
+    });
   }
 
   cart.items = [];

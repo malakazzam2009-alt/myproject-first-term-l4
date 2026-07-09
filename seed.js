@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 
 const connectDB = require("./config/db");
 
-const Category = require("./models/Category");
-const Product = require("./models/Product");
-const Cart = require("./models/Cart");
-const Order = require("./models/Order");
+const Category = require("./models/category.model");
+const Product = require("./models/product.model");
+const Cart = require("./models/cart.model");
+const Order = require("./models/order.model");
 
 const categories = [
   {

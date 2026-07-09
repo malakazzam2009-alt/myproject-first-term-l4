@@ -1,18 +1,16 @@
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
 const mongoSanitize = require("express-mongo-sanitize");
 
 const AppError = require("./utils/AppError");
+const errorHandler = require("./middlewares/errorHandler");
 
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
-
-const errorHandler = require("./middlewares/errorMiddleware");
 
 const app = express();
 

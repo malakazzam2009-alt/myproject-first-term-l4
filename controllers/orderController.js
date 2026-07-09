@@ -1,11 +1,11 @@
-const Order = require("../models/Order");
-const Cart = require("../models/Cart");
-const Product = require("../models/Product");
+const Order = require("../models/Order.model");
+const Cart = require("../models/Cart.model");
+const Product = require("../models/Product.model");
 
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
-// Create Order (Checkout)
+// Create Order
 exports.createOrder = asyncHandler(async (req, res, next) => {
   const { shippingAddress } = req.body;
 
