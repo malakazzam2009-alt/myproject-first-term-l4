@@ -42,7 +42,7 @@ Before running the project, make sure you have:
 Clone the project:
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/malakazzam2009-alt/myproject-first-term-l4>
 ```
 
 Install dependencies:
