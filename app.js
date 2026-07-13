@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 const express = require("express");
-const cors = require("cors");
 const mongoSanitize = require("express-mongo-sanitize");
 
 const AppError = require("./utils/AppError");
@@ -17,8 +16,6 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(mongoSanitize());
-app.use(cors());
-
 // Home Route
 app.get("/", (req, res) => {
   res.status(200).json({

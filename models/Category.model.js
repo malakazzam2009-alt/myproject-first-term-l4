@@ -25,7 +25,6 @@ const categorySchema = new mongoose.Schema(
 categorySchema.pre("save", function () {
   this.slug = slugify(this.name, {
     lower: true,
-    strict: true,
   });
 });
 

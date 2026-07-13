@@ -33,32 +33,20 @@ const productSchema = new mongoose.Schema(
       required: [true, "Category is required"],
     },
 
-    images: [
-      {
-        type: String,
-      },
-    ],
-
-    inStock: {
-      type: Boolean,
-      default: true,
-    },
-
-    ratingsAverage: {
-      type: Number,
-      default: 0,
-      min: 0,
-      max: 5,
-    },
-
-    ratingsQuantity: {
-      type: Number,
-      default: 0,
+    images: {
+      type: [String],
+      default: [],
     },
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+productSchema.virtual("inStock").get(function () {
+  return this.stock > 0;
+});
 
 module.exports = mongoose.model("Product", productSchema);

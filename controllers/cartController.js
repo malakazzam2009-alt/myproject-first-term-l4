@@ -1,12 +1,14 @@
-const Cart = require("../models/Cart.model");
-const Product = require("../models/Product.model");
+const Cart = require("../models/cart.model");
+const Product = require("../models/product.model");
 
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
 // Get Cart
 exports.getCart = asyncHandler(async (req, res) => {
-  const cart = await Cart.findOne().populate(
+  const sessionId = req.headers.sessionid;
+
+  const cart = await Cart.findOne({ sessionId }).populate(
     "items.product",
     "name price images"
   );
@@ -31,7 +33,8 @@ exports.getCart = asyncHandler(async (req, res) => {
 
 // Add Item To Cart
 exports.addItemToCart = asyncHandler(async (req, res, next) => {
-  const { product: productId, quantity } = req.body;
+  const sessionId = req.headers.sessionid;
+  const { product: productId, quantity = 1 } = req.body;
 
   const product = await Product.findById(productId);
 
@@ -39,14 +42,15 @@ exports.addItemToCart = asyncHandler(async (req, res, next) => {
     return next(new AppError("Product not found", 404));
   }
 
-  if (product.stock < quantity) {
+  if (product.stock <= 0 || product.stock < quantity) {
     return next(new AppError("Not enough stock", 400));
   }
 
-  let cart = await Cart.findOne();
+  let cart = await Cart.findOne({ sessionId });
 
   if (!cart) {
     cart = await Cart.create({
+      sessionId,
       items: [],
       totalPrice: 0,
     });
@@ -86,9 +90,10 @@ exports.addItemToCart = asyncHandler(async (req, res, next) => {
 
 // Update Item Quantity
 exports.updateCartItem = asyncHandler(async (req, res, next) => {
+  const sessionId = req.headers.sessionid;
   const { quantity } = req.body;
 
-  const cart = await Cart.findOne();
+  const cart = await Cart.findOne({ sessionId });
 
   if (!cart) {
     return next(new AppError("Cart not found", 404));
@@ -106,32 +111,19 @@ exports.updateCartItem = asyncHandler(async (req, res, next) => {
     cart.items = cart.items.filter(
       (item) => item.product.toString() !== req.params.productId
     );
+  } else {
+    const product = await Product.findById(req.params.productId);
 
-    cart.totalPrice = cart.items.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
+    if (!product) {
+      return next(new AppError("Product not found", 404));
+    }
 
-    await cart.save();
+    if (quantity > product.stock) {
+      return next(new AppError("Not enough stock", 400));
+    }
 
-    return res.status(200).json({
-      status: "success",
-      message: "Item removed successfully",
-      data: cart,
-    });
+    item.quantity = quantity;
   }
-
-  const product = await Product.findById(req.params.productId);
-
-  if (!product) {
-    return next(new AppError("Product not found", 404));
-  }
-
-  if (quantity > product.stock) {
-    return next(new AppError("Not enough stock", 400));
-  }
-
-  item.quantity = quantity;
 
   cart.totalPrice = cart.items.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -149,7 +141,9 @@ exports.updateCartItem = asyncHandler(async (req, res, next) => {
 
 // Remove Item
 exports.removeCartItem = asyncHandler(async (req, res, next) => {
-  const cart = await Cart.findOne();
+  const sessionId = req.headers.sessionid;
+
+  const cart = await Cart.findOne({ sessionId });
 
   if (!cart) {
     return next(new AppError("Cart not found", 404));
@@ -174,8 +168,10 @@ exports.removeCartItem = asyncHandler(async (req, res, next) => {
 });
 
 // Clear Cart
-exports.clearCart = asyncHandler(async (req, res, next) => {
-  const cart = await Cart.findOne();
+exports.clearCart = asyncHandler(async (req, res) => {
+  const sessionId = req.headers.sessionid;
+
+  const cart = await Cart.findOne({ sessionId });
 
   if (!cart) {
     return res.status(200).json({

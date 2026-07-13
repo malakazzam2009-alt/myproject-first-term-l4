@@ -1,6 +1,6 @@
-const Order = require("../models/Order.model");
-const Cart = require("../models/Cart.model");
-const Product = require("../models/Product.model");
+const Order = require("../models/order.model");
+const Cart = require("../models/cart.model");
+const Product = require("../models/product.model");
 
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
@@ -8,8 +8,9 @@ const AppError = require("../utils/AppError");
 // Create Order
 exports.createOrder = asyncHandler(async (req, res, next) => {
   const { shippingAddress } = req.body;
+  const sessionId = req.headers.sessionid;
 
-  const cart = await Cart.findOne().populate("items.product");
+  const cart = await Cart.findOne({ sessionId }).populate("items.product");
 
   if (!cart || cart.items.length === 0) {
     return next(new AppError("Cart is empty", 400));
@@ -27,12 +28,14 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 
     if (product.stock < item.quantity) {
       return next(
-        new AppError(`${product.name} does not have enough stock`, 400)
+        new AppError(
+          `${product.name} does not have enough stock. Available stock: ${product.stock}`,
+          400
+        )
       );
     }
 
     product.stock -= item.quantity;
-    product.inStock = product.stock > 0;
 
     await product.save();
 
@@ -47,7 +50,6 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
   }
 
   const order = await Order.create({
-    orderNumber: `ORD-${Date.now()}`,
     items: orderItems,
     totalPrice,
     shippingAddress,
@@ -55,6 +57,7 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 
   cart.items = [];
   cart.totalPrice = 0;
+
   await cart.save();
 
   res.status(201).json({
@@ -66,10 +69,7 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 
 // Get All Orders
 exports.getOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find().populate(
-    "items.product",
-    "name price"
-  );
+  const orders = await Order.find();
 
   res.status(200).json({
     status: "success",
@@ -80,10 +80,7 @@ exports.getOrders = asyncHandler(async (req, res) => {
 
 // Get Order By ID
 exports.getOrder = asyncHandler(async (req, res, next) => {
-  const order = await Order.findById(req.params.id).populate(
-    "items.product",
-    "name price"
-  );
+  const order = await Order.findById(req.params.id);
 
   if (!order) {
     return next(new AppError("Order not found", 404));
@@ -99,11 +96,11 @@ exports.getOrder = asyncHandler(async (req, res, next) => {
 // Update Order Status
 exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
   const allowedStatus = [
-    "Pending",
-    "Processing",
-    "Shipped",
-    "Delivered",
-    "Cancelled",
+    "pending",
+    "confirmed",
+    "shipped",
+    "delivered",
+    "cancelled",
   ];
 
   if (!allowedStatus.includes(req.body.status)) {
@@ -112,7 +109,9 @@ exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
 
   const order = await Order.findByIdAndUpdate(
     req.params.id,
-    { status: req.body.status },
+    {
+      status: req.body.status,
+    },
     {
       new: true,
       runValidators: true,
@@ -128,4 +127,4 @@ exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
     message: "Order status updated successfully",
     data: order,
   });
-})
+});

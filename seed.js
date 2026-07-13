@@ -2,12 +2,12 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 
-const connectDB = require("./config/db");
+const connectDB = require("./db/db");
 
-const Category = require("./models/category.model");
+const Category = require("./models/Category.model");
 const Product = require("./models/product.model");
 const Cart = require("./models/cart.model");
-const Order = require("./models/order.model");
+const Order = require("./models/Order.model");
 
 const categories = [
   {
@@ -50,7 +50,6 @@ const seedData = async () => {
         stock: 10,
         category: createdCategories[0]._id,
         images: [],
-        inStock: true,
       },
       {
         name: "iPhone 15",
@@ -59,7 +58,6 @@ const seedData = async () => {
         stock: 15,
         category: createdCategories[0]._id,
         images: [],
-        inStock: true,
       },
       {
         name: "T-Shirt",
@@ -68,7 +66,6 @@ const seedData = async () => {
         stock: 50,
         category: createdCategories[1]._id,
         images: [],
-        inStock: true,
       },
       {
         name: "Jeans",
@@ -77,7 +74,6 @@ const seedData = async () => {
         stock: 30,
         category: createdCategories[1]._id,
         images: [],
-        inStock: true,
       },
       {
         name: "JavaScript Book",
@@ -86,7 +82,6 @@ const seedData = async () => {
         stock: 20,
         category: createdCategories[2]._id,
         images: [],
-        inStock: true,
       },
       {
         name: "Node.js Book",
@@ -95,7 +90,6 @@ const seedData = async () => {
         stock: 18,
         category: createdCategories[2]._id,
         images: [],
-        inStock: true,
       },
     ];
 
@@ -108,6 +102,7 @@ Seed completed successfully.
 Categories: ${createdCategories.length}
 Products: ${createdProducts.length}
 `);
+
   } catch (error) {
     console.error("Seed failed.");
     console.error(error.message);

@@ -4,7 +4,6 @@ const orderSchema = new mongoose.Schema(
   {
     orderNumber: {
       type: String,
-      required: [true, "Order number is required"],
       unique: true,
     },
 
@@ -44,28 +43,31 @@ const orderSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: {
-        values: [
-          "Pending",
-          "confirmed",
-          "Shipped",
-          "Delivered",
-          "Cancelled",
-        ],
-        message: "Invalid order status",
-      },
-      default: "Pending",
+      enum: [
+        "pending",
+        "confirmed",
+        "shipped",
+        "delivered",
+        "cancelled",
+      ],
+      default: "pending",
     },
 
     shippingAddress: {
-      type: String,
-      required: [true, "Shipping address is required"],
-      trim: true,
+      street: String,
+      city: String,
+      country: String,
     },
   },
   {
     timestamps: true,
   }
 );
+
+orderSchema.pre("save", function () {
+  if (!this.orderNumber) {
+    this.orderNumber = Date.now().toString();
+  }
+});
 
 module.exports = mongoose.model("Order", orderSchema);

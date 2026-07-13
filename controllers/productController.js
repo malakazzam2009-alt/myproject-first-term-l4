@@ -1,4 +1,4 @@
-const Product = require("../models/Product.model");
+const Product = require("../models/product.model");
 const Category = require("../models/Category.model");
 
 const asyncHandler = require("../utils/asyncHandler");
@@ -24,10 +24,6 @@ exports.getProducts = asyncHandler(async (req, res) => {
     }
   }
 
-  if (req.query.inStock === "true") {
-    filter.inStock = true;
-  }
-
   if (req.query.search) {
     filter.$or = [
       { name: { $regex: req.query.search, $options: "i" } },
@@ -37,7 +33,7 @@ exports.getProducts = asyncHandler(async (req, res) => {
 
   const products = await Product.find(filter).populate(
     "category",
-    "name description"
+    "name"
   );
 
   res.status(200).json({

@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const cartSchema = new mongoose.Schema(
   {
+    sessionId: {
+      type: String,
+      required: true,
+    },
+
     items: [
       {
         product: {
@@ -27,7 +32,6 @@ const cartSchema = new mongoose.Schema(
     totalPrice: {
       type: Number,
       default: 0,
-      min: [0, "Total price cannot be negative"],
     },
   },
   {
