@@ -4,7 +4,7 @@ const express = require("express");
 const mongoSanitize = require("express-mongo-sanitize");
 
 const AppError = require("./utils/AppError");
-const errorHandler = require("./middlewares/errorHandler");
+const errorHandler = require("./middleware/errorHandler");
 
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
@@ -16,13 +16,6 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(mongoSanitize());
-// Home Route
-app.get("/", (req, res) => {
-  res.status(200).json({
-    status: "success",
-    message: "E-Commerce API is running...",
-  });
-});
 
 // Routes
 app.use("/api/categories", categoryRoutes);

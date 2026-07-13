@@ -2,12 +2,11 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 
-const connectDB = require("./db/db");
+const connectDB = require("./db/connectDB");
 
-const Category = require("./models/Category.model");
+const Category = require("./models/category.model");
 const Product = require("./models/product.model");
-const Cart = require("./models/cart.model");
-const Order = require("./models/Order.model");
+const Order = require("./models/order.model");
 
 const categories = [
   {
@@ -30,7 +29,6 @@ const seedData = async () => {
 
     // Delete old data
     await Order.deleteMany();
-    await Cart.deleteMany();
     await Product.deleteMany();
     await Category.deleteMany();
 
