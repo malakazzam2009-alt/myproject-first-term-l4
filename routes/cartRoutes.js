@@ -10,20 +10,20 @@ const {
 
 const router = express.Router();
 
-// Get Cart
+// Get the current user's cart
 router.get("/", getCart);
 
-// Add Item
+// Add a new product to the cart
 router.post("/items", addItemToCart);
 
-// Update Item Quantity
+// Update product quantity or remove it
 router
   .route("/items/:productId")
   .put(updateCartItem)
   .patch(updateCartItem)
   .delete(removeCartItem);
 
-// Clear Cart
+// Remove all items from the cart
 router.delete("/", clearCart);
 
 module.exports = router;

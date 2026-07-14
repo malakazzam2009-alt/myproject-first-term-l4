@@ -4,7 +4,7 @@ const express = require("express");
 const mongoSanitize = require("express-mongo-sanitize");
 
 const AppError = require("./utils/AppError");
-const errorHandler = require("./middlewares/errorHandler");
+const errorHandler = require("./middleware/errorHandler");
 
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");

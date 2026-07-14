@@ -1,17 +1,19 @@
-const Product = require("../models/product.model");
-const Category = require("../models/category.model");
+const Product = require("../models/Product.model");
+const Category = require("../models/Category.model");
 
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
-// Get All Products
+// Get all products
 exports.getProducts = asyncHandler(async (req, res) => {
   const filter = {};
 
+  // Filter by category
   if (req.query.category) {
     filter.category = req.query.category;
   }
 
+  // Filter by price range
   if (req.query.minPrice || req.query.maxPrice) {
     filter.price = {};
 
@@ -24,6 +26,12 @@ exports.getProducts = asyncHandler(async (req, res) => {
     }
   }
 
+  // Show only products that are in stock
+  if (req.query.inStock === "true") {
+    filter.stock = { $gt: 0 };
+  }
+
+  // Search by product name or description
   if (req.query.search) {
     filter.$or = [
       { name: { $regex: req.query.search, $options: "i" } },
@@ -31,6 +39,7 @@ exports.getProducts = asyncHandler(async (req, res) => {
     ];
   }
 
+  // Get products with category name
   const products = await Product.find(filter).populate(
     "category",
     "name"
@@ -43,13 +52,14 @@ exports.getProducts = asyncHandler(async (req, res) => {
   });
 });
 
-// Get Product By ID
+// Get a single product by ID
 exports.getProduct = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id).populate(
     "category",
     "name description"
   );
 
+  // Check if product exists
   if (!product) {
     return next(new AppError("Product not found", 404));
   }
@@ -61,8 +71,9 @@ exports.getProduct = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Create Product
+// Create a new product
 exports.createProduct = asyncHandler(async (req, res, next) => {
+  // Check if category exists
   const category = await Category.findById(req.body.category);
 
   if (!category) {
@@ -78,8 +89,9 @@ exports.createProduct = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Update Product
+// Update product by ID
 exports.updateProduct = asyncHandler(async (req, res, next) => {
+  // Check category if it is being updated
   if (req.body.category) {
     const category = await Category.findById(req.body.category);
 
@@ -97,6 +109,7 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
     }
   );
 
+  // Check if product exists
   if (!product) {
     return next(new AppError("Product not found", 404));
   }
@@ -108,10 +121,11 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Delete Product
+// Delete product by ID
 exports.deleteProduct = asyncHandler(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
 
+  // Check if product exists
   if (!product) {
     return next(new AppError("Product not found", 404));
   }

@@ -1,17 +1,19 @@
-const Order = require("../models/order.model");
-const Cart = require("../models/cart.model");
-const Product = require("../models/product.model");
+const Order = require("../models/Order.model");
+const Cart = require("../models/Cart.model");
+const Product = require("../models/Product.model");
 
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
-// Create Order
+// Create a new order from the user's cart
 exports.createOrder = asyncHandler(async (req, res, next) => {
   const { shippingAddress } = req.body;
   const sessionId = req.headers.sessionid;
 
+  // Find the user's cart with product details
   const cart = await Cart.findOne({ sessionId }).populate("items.product");
 
+  // Make sure the cart is not empty
   if (!cart || cart.items.length === 0) {
     return next(new AppError("Cart is empty", 400));
   }
@@ -19,13 +21,16 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
   let totalPrice = 0;
   const orderItems = [];
 
+  // Check each product before creating the order
   for (const item of cart.items) {
     const product = await Product.findById(item.product._id);
 
+    // Check if the product exists
     if (!product) {
       return next(new AppError("Product not found", 404));
     }
 
+    // Check if enough stock is available
     if (product.stock < item.quantity) {
       return next(
         new AppError(
@@ -35,12 +40,14 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
       );
     }
 
+    // Reduce product stock
     product.stock -= item.quantity;
-
     await product.save();
 
+    // Calculate the total order price
     totalPrice += product.price * item.quantity;
 
+    // Save product information in the order
     orderItems.push({
       product: product._id,
       name: product.name,
@@ -49,15 +56,16 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
     });
   }
 
+  // Create the order
   const order = await Order.create({
     items: orderItems,
     totalPrice,
     shippingAddress,
   });
 
+  // Clear the cart after checkout
   cart.items = [];
   cart.totalPrice = 0;
-
   await cart.save();
 
   res.status(201).json({
@@ -67,7 +75,7 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Get All Orders
+// Get all orders
 exports.getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find();
 
@@ -78,10 +86,11 @@ exports.getOrders = asyncHandler(async (req, res) => {
   });
 });
 
-// Get Order By ID
+// Get a single order by ID
 exports.getOrder = asyncHandler(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
+  // Check if the order exists
   if (!order) {
     return next(new AppError("Order not found", 404));
   }
@@ -93,8 +102,9 @@ exports.getOrder = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Update Order Status
+// Update only the order status
 exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
+  // Allowed status values
   const allowedStatus = [
     "pending",
     "confirmed",
@@ -103,21 +113,21 @@ exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
     "cancelled",
   ];
 
+  // Validate the new status
   if (!allowedStatus.includes(req.body.status)) {
     return next(new AppError("Invalid order status", 400));
   }
 
   const order = await Order.findByIdAndUpdate(
     req.params.id,
-    {
-      status: req.body.status,
-    },
+    { status: req.body.status },
     {
       new: true,
       runValidators: true,
     }
   );
 
+  // Check if the order exists
   if (!order) {
     return next(new AppError("Order not found", 404));
   }

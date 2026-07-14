@@ -1,5 +1,6 @@
 const express = require("express");
 
+// Import order controller functions
 const {
   createOrder,
   getOrders,
@@ -9,16 +10,16 @@ const {
 
 const router = express.Router();
 
-// Create Order & Get All Orders
+// Get all orders or create a new order
 router
   .route("/")
   .get(getOrders)
   .post(createOrder);
 
-// Get Order By ID
+// Get a single order by its ID
 router.get("/:id", getOrder);
 
-// Update Order Status
+// Update only the order status
 router
   .route("/:id/status")
   .put(updateOrderStatus)

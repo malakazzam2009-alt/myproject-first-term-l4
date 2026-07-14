@@ -1,9 +1,10 @@
-const Category = require("../models/category.model");
+const Category = require("../models/Category.model");
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
-// Get All Categories
+// Get all categories
 exports.getCategories = asyncHandler(async (req, res, next) => {
+  // Get all categories from database
   const categories = await Category.find();
 
   res.status(200).json({
@@ -13,10 +14,12 @@ exports.getCategories = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Get Category By ID
+// Get category by ID
 exports.getCategory = asyncHandler(async (req, res, next) => {
+  // Find category by ID
   const category = await Category.findById(req.params.id);
 
+  // Check if category exists
   if (!category) {
     return next(new AppError("Category not found", 404));
   }
@@ -28,8 +31,9 @@ exports.getCategory = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Create Category
+// Create a new category
 exports.createCategory = asyncHandler(async (req, res, next) => {
+  // Create category
   const category = await Category.create(req.body);
 
   res.status(201).json({
@@ -39,8 +43,9 @@ exports.createCategory = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Update Category
+// Update category by ID
 exports.updateCategory = asyncHandler(async (req, res, next) => {
+  // Update category and return updated document
   const category = await Category.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -50,6 +55,7 @@ exports.updateCategory = asyncHandler(async (req, res, next) => {
     }
   );
 
+  // Check if category exists
   if (!category) {
     return next(new AppError("Category not found", 404));
   }
@@ -61,10 +67,12 @@ exports.updateCategory = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Delete Category
+// Delete category by ID
 exports.deleteCategory = asyncHandler(async (req, res, next) => {
+  // Delete category
   const category = await Category.findByIdAndDelete(req.params.id);
 
+  // Check if category exists
   if (!category) {
     return next(new AppError("Category not found", 404));
   }
