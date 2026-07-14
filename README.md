@@ -2,20 +2,22 @@
 
 ## About the Project
 
-This is my first backend project for Level 4.
+This project is an E-Commerce Backend API built using Node.js, Express.js, MongoDB, and Mongoose.
 
-I built a simple E-Commerce API using **Node.js**, **Express.js**, and **MongoDB**.
+The API provides the main features needed for an online store, including managing categories, products, shopping cart, and orders.
 
-The project can manage categories, products, cart, and orders.
+---
 
 ## Features
 
 * Categories CRUD
 * Products CRUD
-* Product filtering
-* Shopping cart
-* Orders
+* Product Filtering
+* Shopping Cart Management
+* Order Management
 * Checkout
+
+---
 
 ## Technologies
 
@@ -23,127 +25,22 @@ The project can manage categories, products, cart, and orders.
 * Express.js
 * MongoDB
 * Mongoose
-* dotenv
-* cors
-* slugify
-* express-mongo-sanitize
-* nodemon
+
+---
 
 ## Prerequisites
 
 Before running the project, make sure you have:
 
-* Node.js
-* npm
-* MongoDB
+* Node.js installed
+* npm installed
+* MongoDB installed and running
+
+---
 
 ## Installation
 
-Clone the project:
+Clone the repository:
 
 ```bash
-git clone <https://github.com/malakazzam2009-alt/myproject-first-term-l4>
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Create a `.env` file and add:
-
-```env
-PORT=3000
-MONGO_URI=your_mongodb_connection_string
-NODE_ENV=development
-```
-
-## Environment Variables
-
-| Variable  | Description        | Example                          |
-| --------- | ------------------ | -------------------------------- |
-| PORT      | Server port        | 3000                             |
-| NODE_ENV  | Development mode   | development                      |
-| MONGO_URI | MongoDB connection | mongodb://localhost:27017/testdb |
-
-## Run the Project
-
-For development:
-
-```bash
-npm run dev
-```
-
-For production:
-
-```bash
-npm start
-```
-
-## Seed the Database
-
-```bash
-npm run seed
-```
-
-## API Routes
-
-### Categories
-
-* GET `/api/categories`
-* GET `/api/categories/:id`
-* POST `/api/categories`
-* PUT `/api/categories/:id`
-* PATCH `/api/categories/:id`
-* DELETE `/api/categories/:id`
-
-### Products
-
-* GET `/api/products`
-* GET `/api/products/:id`
-* POST `/api/products`
-* PUT `/api/products/:id`
-* PATCH `/api/products/:id`
-* DELETE `/api/products/:id`
-
-### Cart
-
-* GET `/api/cart`
-* POST `/api/cart/items`
-* PUT `/api/cart/items/:productId`
-* PATCH `/api/cart/items/:productId`
-* DELETE `/api/cart/items/:productId`
-* DELETE `/api/cart`
-
-### Orders
-
-* GET `/api/orders`
-* GET `/api/orders/:id`
-* POST `/api/orders`
-* PUT `/api/orders/:id/status`
-* PATCH `/api/orders/:id/status`
-
-## Project Structure
-
-```text
-config/
-controllers/
-middlewares/
-models/
-routes/
-utils/
-app.js
-server.js
-seed.js
-package.json
-README.md
-.env.example
-.gitignore
-```
-
-## Author
-
-**Malak Waleed Saad Azzam**
-
-Level 4 – First Term Web Development Project
+git clone https://github.com/malakazzam2009-alt/myproject-first-term-l4.git

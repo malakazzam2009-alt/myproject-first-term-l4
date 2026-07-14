@@ -1,5 +1,3 @@
-// middleware/errorHandler.js
-
 const errorHandler = (err, req, res, next) => {
   // Set default status code and status
   err.statusCode = err.statusCode || 500;

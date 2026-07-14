@@ -7,8 +7,15 @@ const AppError = require("../utils/AppError");
 
 // Create a new order from the user's cart
 exports.createOrder = asyncHandler(async (req, res, next) => {
+  // Get sessionId from header
+  const sessionId = req.headers["session-id"];
+
   const { shippingAddress } = req.body;
-  const sessionId = req.headers.sessionid;
+
+  // Make sure sessionId exists
+  if (!sessionId) {
+    return next(new AppError("Session ID is required", 400));
+  }
 
   // Find the user's cart with product details
   const cart = await Cart.findOne({ sessionId }).populate("items.product");
@@ -44,10 +51,10 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
     product.stock -= item.quantity;
     await product.save();
 
-    // Calculate the total order price
+    // Calculate total price
     totalPrice += product.price * item.quantity;
 
-    // Save product information in the order
+    // Add product information to order
     orderItems.push({
       product: product._id,
       name: product.name,
@@ -75,6 +82,7 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
   });
 });
 
+
 // Get all orders
 exports.getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find();
@@ -86,11 +94,11 @@ exports.getOrders = asyncHandler(async (req, res) => {
   });
 });
 
+
 // Get a single order by ID
 exports.getOrder = asyncHandler(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
-  // Check if the order exists
   if (!order) {
     return next(new AppError("Order not found", 404));
   }
@@ -102,9 +110,9 @@ exports.getOrder = asyncHandler(async (req, res, next) => {
   });
 });
 
+
 // Update only the order status
 exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
-  // Allowed status values
   const allowedStatus = [
     "pending",
     "confirmed",
@@ -113,7 +121,6 @@ exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
     "cancelled",
   ];
 
-  // Validate the new status
   if (!allowedStatus.includes(req.body.status)) {
     return next(new AppError("Invalid order status", 400));
   }
@@ -127,7 +134,6 @@ exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
     }
   );
 
-  // Check if the order exists
   if (!order) {
     return next(new AppError("Order not found", 404));
   }

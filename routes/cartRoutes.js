@@ -16,13 +16,12 @@ router.get("/", getCart);
 // Add a new product to the cart
 router.post("/items", addItemToCart);
 
-// Update product quantity or remove it
+// Update product quantity or remove it by product ID
 router
   .route("/items/:productId")
   .put(updateCartItem)
   .patch(updateCartItem)
   .delete(removeCartItem);
-
 // Remove all items from the cart
 router.delete("/", clearCart);
 

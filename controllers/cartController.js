@@ -8,13 +8,11 @@ const AppError = require("../utils/AppError");
 exports.getCart = asyncHandler(async (req, res) => {
   const sessionId = req.headers.sessionid;
 
-  // Find cart and load product details
   const cart = await Cart.findOne({ sessionId }).populate(
     "items.product",
     "name price images"
   );
 
-  // Return empty cart if no cart exists
   if (!cart) {
     return res.status(200).json({
       status: "success",
@@ -38,19 +36,16 @@ exports.addItemToCart = asyncHandler(async (req, res, next) => {
   const sessionId = req.headers.sessionid;
   const { product: productId, quantity = 1 } = req.body;
 
-  // Check if the product exists
   const product = await Product.findById(productId);
 
   if (!product) {
     return next(new AppError("Product not found", 404));
   }
 
-  // Check product stock
   if (product.stock <= 0 || product.stock < quantity) {
     return next(new AppError("Not enough stock", 400));
   }
 
-  // Find or create cart
   let cart = await Cart.findOne({ sessionId });
 
   if (!cart) {
@@ -61,7 +56,6 @@ exports.addItemToCart = asyncHandler(async (req, res, next) => {
     });
   }
 
-  // Check if product already exists in cart
   const item = cart.items.find(
     (item) => item.product.toString() === productId
   );
@@ -80,7 +74,6 @@ exports.addItemToCart = asyncHandler(async (req, res, next) => {
     });
   }
 
-  // Recalculate total price
   cart.totalPrice = cart.items.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -100,14 +93,12 @@ exports.updateCartItem = asyncHandler(async (req, res, next) => {
   const sessionId = req.headers.sessionid;
   const { quantity } = req.body;
 
-  // Find user's cart
   const cart = await Cart.findOne({ sessionId });
 
   if (!cart) {
     return next(new AppError("Cart not found", 404));
   }
 
-  // Find the requested product in cart
   const item = cart.items.find(
     (item) => item.product.toString() === req.params.productId
   );
@@ -116,7 +107,6 @@ exports.updateCartItem = asyncHandler(async (req, res, next) => {
     return next(new AppError("Product not found in cart", 404));
   }
 
-  // Remove item if quantity is zero or less
   if (quantity <= 0) {
     cart.items = cart.items.filter(
       (item) => item.product.toString() !== req.params.productId
@@ -128,7 +118,6 @@ exports.updateCartItem = asyncHandler(async (req, res, next) => {
       return next(new AppError("Product not found", 404));
     }
 
-    // Check stock before updating quantity
     if (quantity > product.stock) {
       return next(new AppError("Not enough stock", 400));
     }
@@ -136,7 +125,6 @@ exports.updateCartItem = asyncHandler(async (req, res, next) => {
     item.quantity = quantity;
   }
 
-  // Update total price
   cart.totalPrice = cart.items.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -161,12 +149,10 @@ exports.removeCartItem = asyncHandler(async (req, res, next) => {
     return next(new AppError("Cart not found", 404));
   }
 
-  // Remove the selected item
   cart.items = cart.items.filter(
     (item) => item.product.toString() !== req.params.productId
   );
 
-  // Update total price
   cart.totalPrice = cart.items.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -187,7 +173,6 @@ exports.clearCart = asyncHandler(async (req, res) => {
 
   const cart = await Cart.findOne({ sessionId });
 
-  // Return if cart is already empty
   if (!cart) {
     return res.status(200).json({
       status: "success",
@@ -199,7 +184,6 @@ exports.clearCart = asyncHandler(async (req, res) => {
     });
   }
 
-  // Clear cart data
   cart.items = [];
   cart.totalPrice = 0;
 
