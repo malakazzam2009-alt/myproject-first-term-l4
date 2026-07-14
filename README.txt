@@ -37,10 +37,18 @@ Before running the project, make sure you have:
 * MongoDB installed and running
 
 ---
-
 ## Installation
 
 Clone the repository:
 
 ```bash
 git clone https://github.com/malakazzam2009-alt/myproject-first-term-l4.git
+## note for cart
+Postman Header:
+
+Key	      :Value
+sessionId : user123
+## note for order
+Postman Header:
+Key	      :Value
+session-id :test123

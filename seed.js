@@ -6,7 +6,6 @@ const connectDB = require("./db/connectDB");
 
 const Category = require("./models/Category.model");
 const Product = require("./models/Product.model");
-const Cart = require("./models/Cart.model");
 const Order = require("./models/Order.model");
 
 const categories = [
@@ -30,7 +29,6 @@ const seedData = async () => {
 
     // Delete old data
     await Order.deleteMany();
-    await Cart.deleteMany();
     await Product.deleteMany();
     await Category.deleteMany();
 
