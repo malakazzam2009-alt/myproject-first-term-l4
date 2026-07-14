@@ -29,7 +29,7 @@ const CategorySchema = new mongoose.Schema(
 );
 
 // Generate slug before saving the category
-categorySchema.pre("save", function () {
+CategorySchema.pre("save", function () {
   this.slug = slugify(this.name, {
     lower: true,
   });

@@ -53,7 +53,7 @@ const ProductSchema = new mongoose.Schema(
 );
 
 // Check if the product is available in stock
-productSchema.virtual("inStock").get(function () {
+ProductSchema.virtual("inStock").get(function () {
   return this.stock > 0;
 });
 

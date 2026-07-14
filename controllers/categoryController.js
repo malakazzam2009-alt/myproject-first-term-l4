@@ -3,7 +3,7 @@ const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
 // Get all categories
-exports.getCategories = asyncHandler(async (req, res, next) => {
+exports.getCategories = asyncHandler(async (req, res) => {
   // Get all categories from database
   const categories = await Category.find();
 
@@ -32,7 +32,7 @@ exports.getCategory = asyncHandler(async (req, res, next) => {
 });
 
 // Create a new category
-exports.createCategory = asyncHandler(async (req, res, next) => {
+exports.createCategory = asyncHandler(async (req, res) => {
   // Create category
   const category = await Category.create(req.body);
 
