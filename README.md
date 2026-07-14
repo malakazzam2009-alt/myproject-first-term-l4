@@ -51,4 +51,4 @@ sessionId : user123
 ## note for order
 Postman Header:
 Key	      :Value
-session-id :test123
+sessionid :test123
