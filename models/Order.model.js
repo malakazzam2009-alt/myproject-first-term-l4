@@ -6,6 +6,7 @@ const OrderSchema = new mongoose.Schema(
     orderNumber: {
       type: String,
       unique: true,
+      default: () => Date.now().toString(),
     },
 
     // List of ordered products
@@ -65,16 +66,5 @@ const OrderSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-
-// Generate order number automatically
-OrderSchema.pre("save", function (next) {
-  if (!this.orderNumber) {
-    this.orderNumber = Date.now().toString();
-  }
-
-  next();
-});
-
 
 module.exports = mongoose.model("Order", OrderSchema);

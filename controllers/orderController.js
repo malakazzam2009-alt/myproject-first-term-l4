@@ -5,245 +5,140 @@ const Product = require("../models/Product.model");
 const asyncHandler = require("../utils/asyncHandler");
 const AppError = require("../utils/AppError");
 
-
-// Create Order from Cart
+// Create Order
 exports.createOrder = asyncHandler(async (req, res, next) => {
-
-  // Get session id from header
   const sessionId = req.headers.sessionid;
-
   const { shippingAddress } = req.body;
-
 
   if (!sessionId) {
     return next(new AppError("Session ID is required", 400));
   }
 
-
-  // Find cart using same sessionid from header
-  const cart = await Cart.findOne({ sessionId })
-    .populate("items.product");
-
+  // Find user's cart
+  const cart = await Cart.findOne({ sessionId }).populate("items.product");
 
   if (!cart || cart.items.length === 0) {
     return next(new AppError("Cart is empty", 400));
   }
 
-
   let totalPrice = 0;
   const orderItems = [];
 
-
-  // Check products
+  // Check products and calculate total
   for (const item of cart.items) {
-
-
     if (!item.product) {
       return next(new AppError("Product not found", 404));
     }
 
-
     const product = await Product.findById(item.product._id);
-
 
     if (!product) {
       return next(new AppError("Product not found", 404));
     }
 
-
     if (product.stock < item.quantity) {
       return next(
         new AppError(
-          `${product.name} does not have enough stock`,
+          `${product.name} does not have enough stock. Available stock: ${product.stock}`,
           400
         )
       );
     }
 
-
-
     orderItems.push({
-
       product: product._id,
-
       name: product.name,
-
       price: product.price,
-
-      quantity: item.quantity
-
+      quantity: item.quantity,
     });
 
-
-
     totalPrice += product.price * item.quantity;
-
-
-
-    // decrease stock
-
-    product.stock -= item.quantity;
-
-    await product.save();
-
-
   }
 
-
+  // Reduce stock
+  for (const item of cart.items) {
+    const product = await Product.findById(item.product._id);
+    product.stock -= item.quantity;
+    await product.save();
+  }
 
   // Create order
   const order = await Order.create({
-
-    sessionId: sessionId,
-
     items: orderItems,
-
     totalPrice,
-
-    shippingAddress
-
+    shippingAddress,
   });
-
-
 
   // Clear cart
   cart.items = [];
-
   cart.totalPrice = 0;
-
   await cart.save();
 
-
-
   res.status(201).json({
-
     status: "success",
-
     message: "Order created successfully",
-
-    data: order
-
+    data: order,
   });
-
-
 });
 
 // Get all orders
 exports.getOrders = asyncHandler(async (req, res) => {
-
-
   const orders = await Order.find();
 
-
-
   res.status(200).json({
-
     status: "success",
-
     message: "Orders retrieved successfully",
-
-    data: orders
-
+    data: orders,
   });
-
-
 });
 
-// Get single order
+// Get one order
 exports.getOrder = asyncHandler(async (req, res, next) => {
-
-
   const order = await Order.findById(req.params.id);
 
-
-
   if (!order) {
-
     return next(new AppError("Order not found", 404));
-
   }
 
-
-
   res.status(200).json({
-
     status: "success",
-
     message: "Order retrieved successfully",
-
-    data: order
-
+    data: order,
   });
-
-
 });
 
 // Update order status
 exports.updateOrderStatus = asyncHandler(async (req, res, next) => {
-
-
   const allowedStatus = [
-
     "pending",
-
     "confirmed",
-
     "shipped",
-
     "delivered",
-
-    "cancelled"
-
+    "cancelled",
   ];
-
-
 
   const { status } = req.body;
 
-
-
   if (!allowedStatus.includes(status)) {
-
     return next(new AppError("Invalid order status", 400));
-
   }
-
-
 
   const order = await Order.findByIdAndUpdate(
-
     req.params.id,
-
-    {
-      status
-    },
-
+    { status },
     {
       new: true,
-      runValidators: true
+      runValidators: true,
     }
-
   );
 
-
-
   if (!order) {
-
     return next(new AppError("Order not found", 404));
-
   }
 
-
-
   res.status(200).json({
-
     status: "success",
-
     message: "Order status updated successfully",
-
-    data: order
-
+    data: order,
   });
-
-
 });

@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Test Category\",\r\n  \"description\": \"Category for delete testing\"\r\n}",
+              "raw": "{\r\n  \"name\": \"Temporary Category\",\r\n  \"description\": \"Dummy category used for removal testing\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -65,7 +65,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/categories/6a555d642e92396b7855fe18",
+              "raw": "http://localhost:3000/api/categories/6a5679dcfbccaebc7c910aca",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -74,7 +74,7 @@
               "path": [
                 "api",
                 "categories",
-                "6a555d642e92396b7855fe18"
+                "6a5679dcfbccaebc7c910aca"
               ]
             }
           },
@@ -87,7 +87,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"Update cloths\"\r\n}",
+              "raw": "{\r\n    \"name\": \"Update Electronic\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -95,7 +95,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/api/categories/6a555d642e92396b7855fe18",
+              "raw": "http://localhost:3000/api/categories/6a5679dcfbccaebc7c910aca",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -104,7 +104,7 @@
               "path": [
                 "api",
                 "categories",
-                "6a555d642e92396b7855fe18"
+                "6a5679dcfbccaebc7c910aca"
               ]
             }
           },
@@ -117,7 +117,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"description\": \"sport tools \"\r\n}",
+              "raw": "{\r\n  \"description\": \"test tools \"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -125,7 +125,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/api/categories/6a560b8495e305a681ea529b",
+              "raw": "http://localhost:3000/api/categories/6a56b461c3b015fc6f961013",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -134,7 +134,7 @@
               "path": [
                 "api",
                 "categories",
-                "6a560b8495e305a681ea529b"
+                "6a56b461c3b015fc6f961013"
               ]
             }
           },
@@ -146,7 +146,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/categories/6a5610e507d89229a392f089",
+              "raw": "http://localhost:3000/api/categories/6a56b5c7c3b015fc6f961016",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -155,7 +155,7 @@
               "path": [
                 "api",
                 "categories",
-                "6a5610e507d89229a392f089"
+                "6a56b5c7c3b015fc6f961016"
               ]
             }
           },
@@ -380,7 +380,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/products/6a555d652e92396b7855fe1a",
+              "raw": "http://localhost:3000/api/products/6a581d9621298a784f9b3fbf",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -389,7 +389,7 @@
               "path": [
                 "api",
                 "products",
-                "6a555d652e92396b7855fe1a"
+                "6a581d9621298a784f9b3fbf"
               ]
             }
           },
@@ -402,7 +402,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Apple iPad Air M3\",\r\n  \"description\": \"Powerful tablet for work and entertainment\",\r\n  \"price\": 799,\r\n  \"stock\": 15,\r\n  \"category\": \"6a555d642e92396b7855fe17\",\r\n  \"images\": [],\r\n  \"inStock\": true\r\n}",
+              "raw": "{\r\n  \"name\": \"Samsung Galaxy Tab S10\",\r\n  \"description\": \"High-performance tablet with advanced display\",\r\n  \"price\": 999,\r\n  \"stock\": 30,\r\n  \"category\": \"6a57b7fd35e4ec3f4f27b23a\",\r\n  \"images\": [],\r\n  \"inStock\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -431,7 +431,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Dell Laptop Updated\",\r\n  \"description\": \"Dell Inspiron 15\",\r\n  \"price\": 1300,\r\n  \"stock\": 8,\r\n  \"category\": \"6a555d642e92396b7855fe17\",\r\n  \"images\": [],\r\n  \"inStock\": true\r\n}",
+              "raw": "{\r\n  \"name\": \"Dell Laptop Updated\",\r\n  \"description\": \"Dell Inspiron 15\",\r\n  \"price\": 1300,\r\n  \"stock\": 8,\r\n  \"category\": \"6a57b7fd35e4ec3f4f27b23a\",\r\n  \"images\": [],\r\n  \"inStock\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -439,7 +439,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/api/products/6a555d652e92396b7855fe1a",
+              "raw": "http://localhost:3000/api/products/6a57b7fe35e4ec3f4f27b23f",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -448,7 +448,7 @@
               "path": [
                 "api",
                 "products",
-                "6a555d652e92396b7855fe1a"
+                "6a57b7fe35e4ec3f4f27b23f"
               ]
             }
           },
@@ -469,7 +469,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/api/products/6a56525055fd6c4688dc7b1d",
+              "raw": "http://localhost:3000/api/products/6a57b7fe35e4ec3f4f27b23f",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -478,7 +478,7 @@
               "path": [
                 "api",
                 "products",
-                "6a56525055fd6c4688dc7b1d"
+                "6a57b7fe35e4ec3f4f27b23f"
               ]
             }
           },
@@ -490,7 +490,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/products/6a56130c07d89229a392f08b",
+              "raw": "http://localhost:3000/api/products/6a57c956806f675eee54fb7c",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -499,7 +499,7 @@
               "path": [
                 "api",
                 "products",
-                "6a56130c07d89229a392f08b"
+                "6a57c956806f675eee54fb7c"
               ]
             }
           },
@@ -561,7 +561,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"price\": 899,\r\n  \"stock\": 20\r\n}",
+              "raw": "{\r\n\r\n\r\n\r\n  \"price\": 899,\r\n  \"stock\": 30\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -709,10 +709,16 @@
           },
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "sessionid",
+                "value": "user123",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"sessionId\": \"session-test-001\"\r\n}",
+              "raw": "",
               "options": {
                 "raw": {
                   "language": "json"
@@ -741,13 +747,13 @@
             "header": [
               {
                 "key": "sessionid",
-                "value": "session-test-001",
+                "value": "user123",
                 "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"sessionId\": \"session-test-001\",\r\n  \"product\": \"6a56125007d89229a392f08a\",\r\n  \"quantity\": 2\r\n}",
+              "raw": "\r\n\r\n\r\n\r\n{\r\n  \"product\": \"6a57b7fe35e4ec3f4f27b23f\",\r\n  \"quantity\": 1\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -777,13 +783,13 @@
             "header": [
               {
                 "key": "sessionid",
-                "value": "session-test-001",
+                "value": "user123",
                 "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"sessionId\": \"session-test-001\",\r\n  \"quantity\": 3\r\n}\r\n",
+              "raw": "{\r\n  \"quantity\": 3\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -791,7 +797,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/api/cart/6a56125007d89229a392f08a",
+              "raw": "http://localhost:3000/api/cart/items/6a57b7fe35e4ec3f4f27b23f",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -800,7 +806,8 @@
               "path": [
                 "api",
                 "cart",
-                "6a56125007d89229a392f08a"
+                "items",
+                "6a57b7fe35e4ec3f4f27b23f"
               ]
             }
           },
@@ -813,7 +820,7 @@
             "header": [
               {
                 "key": "sessionid",
-                "value": "session-test-001",
+                "value": "user123",
                 "type": "text"
               }
             ],
@@ -827,7 +834,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/api/cart/6a56125007d89229a392f08a",
+              "raw": "http://localhost:3000/api/cart/items/6a5679dcfbccaebc7c910acf",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -836,7 +843,8 @@
               "path": [
                 "api",
                 "cart",
-                "6a56125007d89229a392f08a"
+                "items",
+                "6a5679dcfbccaebc7c910acf"
               ]
             }
           },
@@ -846,10 +854,16 @@
           "name": "New Request",
           "request": {
             "method": "DELETE",
-            "header": [],
+            "header": [
+              {
+                "key": "sessionid",
+                "value": "user123",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"sessionId\": \"session-test-001\"\r\n}",
+              "raw": "",
               "options": {
                 "raw": {
                   "language": "json"
@@ -878,7 +892,7 @@
             "header": [
               {
                 "key": "sessionId",
-                "value": "test123",
+                "value": "user123",
                 "type": "text"
               }
             ],
@@ -902,7 +916,7 @@
             "header": [
               {
                 "key": "sessionId",
-                "value": "test123",
+                "value": "user123",
                 "type": "text"
               }
             ],
@@ -936,7 +950,7 @@
             "header": [
               {
                 "key": "sessionId",
-                "value": "\ttest123",
+                "value": "user123",
                 "type": "text"
               }
             ],
@@ -970,8 +984,8 @@
             "method": "DELETE",
             "header": [
               {
-                "key": "sessionId",
-                "value": "test123",
+                "key": "sessionid",
+                "value": "user123",
                 "type": "text"
               }
             ],
@@ -996,8 +1010,8 @@
             "method": "DELETE",
             "header": [
               {
-                "key": "sessionId",
-                "value": "test123",
+                "key": "sessionid",
+                "value": "user123",
                 "type": "text"
               }
             ],
@@ -1023,36 +1037,13 @@
           "name": "New Request",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/orders",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "orders"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "New Request",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"sessionId\": \"session-test-001\",\r\n  \"shippingAddress\": \"Cairo, Egypt\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+            "header": [
+              {
+                "key": "sessionid",
+                "value": "user123",
+                "type": "text"
               }
-            },
+            ],
             "url": {
               "raw": "http://localhost:3000/api/orders",
               "protocol": "http",
@@ -1075,7 +1066,13 @@
           },
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "sessionid",
+                "value": "user123",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "",
@@ -1086,7 +1083,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/api/orders/6a562a7c7a91c1792d401673",
+              "raw": "http://localhost:3000/api/orders/6a583357e1515e96ca2f01dd",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1095,7 +1092,7 @@
               "path": [
                 "api",
                 "orders",
-                "6a562a7c7a91c1792d401673"
+                "6a583357e1515e96ca2f01dd"
               ]
             }
           },
@@ -1105,10 +1102,16 @@
           "name": "New Request",
           "request": {
             "method": "PATCH",
-            "header": [],
+            "header": [
+              {
+                "key": "sessionid",
+                "value": "user123",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"sessionId\": \"session-test-001\",\r\n    \"status\": \"shipped\"\r\n}",
+              "raw": "{\r\n    \"status\": \"shipped\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1116,7 +1119,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/api/orders/6a562a7c7a91c1792d401673/status",
+              "raw": "http://localhost:3000/api/orders/6a583357e1515e96ca2f01dd/status",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1125,7 +1128,7 @@
               "path": [
                 "api",
                 "orders",
-                "6a562a7c7a91c1792d401673",
+                "6a583357e1515e96ca2f01dd",
                 "status"
               ]
             }
@@ -1136,10 +1139,16 @@
           "name": "New Request",
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "sessionid",
+                "value": "user123",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"sessionId\": \"session-test-001\",\r\n  \"status\": \"delivered\"\r\n}",
+              "raw": "{\r\n  \"status\": \"delivered\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1147,7 +1156,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/api/orders/6a562a7c7a91c1792d401673/status",
+              "raw": "http://localhost:3000/api/orders/6a583357e1515e96ca2f01dd/status",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1156,7 +1165,7 @@
               "path": [
                 "api",
                 "orders",
-                "6a562a7c7a91c1792d401673",
+                "6a583357e1515e96ca2f01dd",
                 "status"
               ]
             }
@@ -1169,8 +1178,8 @@
             "method": "POST",
             "header": [
               {
-                "key": "session-id",
-                "value": "test123",
+                "key": "sessionid",
+                "value": "user123",
                 "type": "text"
               }
             ],
@@ -1200,16 +1209,22 @@
           "name": "New Request",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "sessionid",
+                "value": "user123",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "{{baseUrl}}/api/orders/6a566986d96f951703cf5ae4",
+              "raw": "{{baseUrl}}/api/orders/6a583357e1515e96ca2f01dd",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "orders",
-                "6a566986d96f951703cf5ae4"
+                "6a583357e1515e96ca2f01dd"
               ]
             }
           },
@@ -1222,7 +1237,7 @@
             "header": [
               {
                 "key": "session-id",
-                "value": "test123",
+                "value": "user123",
                 "type": "text"
               }
             ],
@@ -1236,15 +1251,50 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/api/orders/6a566986d96f951703cf5ae4/status",
+              "raw": "{{baseUrl}}/api/orders/6a583357e1515e96ca2f01dd/status",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "orders",
-                "6a566986d96f951703cf5ae4",
+                "6a583357e1515e96ca2f01dd",
                 "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "sessionid",
+                "value": "user123",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"shippingAddress\": {\r\n    \"street\": \"123 Main Street\",\r\n    \"city\": \"Cairo\",\r\n    \"country\": \"Egypt\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "orders"
               ]
             }
           },
